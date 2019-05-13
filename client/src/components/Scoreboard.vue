@@ -1,10 +1,9 @@
 <template>
   <div class="container">
-    <h3>Scoreboard</h3>
 
     <div class="row">
-      <PlayerScore class="col" name="player 0" v-bind:scores="scores0" v-bind:active="activePlayer == 0" />
-      <PlayerScore class="col" name="player 1" v-bind:scores="scores1" v-bind:active="activePlayer == 1" />
+      <PlayerScore class="col" name="player 0" v-bind:scores="scores0" v-bind:active="activePlayer == 0" v-bind:remaining="calcRemaining(scores0)" />
+      <PlayerScore class="col" name="player 1" v-bind:scores="scores1" v-bind:active="activePlayer == 1" v-bind:remaining="calcRemaining(scores1)" />
     </div>
 
     <input v-model="turnscore" placeholder="Enter score">
@@ -52,6 +51,10 @@ export default {
     clearScores(e) {
       e.preventDefault();
       this.socket.emit('CLEAR_SCORES');
+    },
+    calcRemaining(scores) {
+      let sum = scores.reduce(function(a, b) { return a+b; }, 0);
+      return 301 - sum
     }
   },
   mounted () {

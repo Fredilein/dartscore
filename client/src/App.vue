@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
     <div class="container">
-      <h2>Vue express app</h2>
+      <h1>dartscore</h1>
       <Scoreboard />
     </div>
   </div>
@@ -21,11 +21,7 @@ export default {
     return {
       something: 1
     }
-  },
-  mounted () {
-    console.log('mounted');
   }
-
 }
 </script>
 

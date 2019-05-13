@@ -1,6 +1,7 @@
 <template>
   <div>
     <h5>{{ name }}</h5>
+    <p>Remaining: {{ remaining }}</p>
     <ul class="list-group list-group-flush">
       <li class="list-group-item" v-for="s in scores">
         {{ s }}
@@ -18,7 +19,8 @@ export default {
   props: {
     name: String,
     scores: Array,
-    active: Boolean
+    active: Boolean,
+    remaining: Number
   }
 }
 </script>
