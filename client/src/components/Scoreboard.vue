@@ -1,36 +1,73 @@
 <template>
-  <div>
+  <div class="container">
     <h3>Scoreboard</h3>
-    Player 0: {{ score0 }}
+
+    <div class="row">
+      <PlayerScore class="col" name="player 0" v-bind:scores="scores0" v-bind:active="activePlayer == 0" />
+      <PlayerScore class="col" name="player 1" v-bind:scores="scores1" v-bind:active="activePlayer == 1" />
+    </div>
+
+    <input v-model="turnscore" placeholder="Enter score">
+    <button type="button" class="btn btn-success" v-on:click="sendTurnscore">yup</button>
     <br>
-    Player 1: {{ score1 }}
-    <br>
-    <input v-model="newscore" placeholder="Enter score">
-    <button v-on:click="newScore">yup</button>
+    <button type="button" class="btn btn-danger" v-on:click="clearScores">clear score</button>
   </div>
 </template>
 
 
 
 <script>
+import io from 'socket.io-client';
+import PlayerScore from './PlayerScore.vue';
 
 export default {
   name: 'Scoreboard',
+  components: {
+    PlayerScore
+  },
   data () {
     return {
-      score0: 0,
-      score1: 0,
+      scores0: [],
+      scores1: [],
       activePlayer: 0,
-      newscore: ""
+      turnscore: "",
+      socket: io('localhost:3001')
     }
   },
   methods: {
-    newScore: function () {
-      alert('score: ' + this.newscore);
+    sendTurnscore(e) {
+      e.preventDefault();
+      let s = Number(this.turnscore);
+
+      if (s > -1 && s < 181) {
+        this.socket.emit('SEND_TURNSCORE', {
+          activePlayer: this.activePlayer,
+          turnscore: Number(this.turnscore)
+        });
+        this.turnscore = "";
+      } else {
+        alert("Enter a valid score pls");
+      }
+    },
+    clearScores(e) {
+      e.preventDefault();
+      this.socket.emit('CLEAR_SCORES');
     }
   },
   mounted () {
-    console.log("mounted scoreboard");
+    this.socket.on('TURNSCORE', (data) => {
+      if (data.activePlayer == 0) {
+        this.scores0.push(data.turnscore);
+      } else {
+        this.scores1.push(data.turnscore);
+      }
+      this.activePlayer = (data.activePlayer + 1) % 2;
+    });
+    this.socket.on('CLEAR_SCORES', () => {
+      this.scores0 = [];
+      this.scores1 = [];
+      this.activePlayer = 0;
+    });
   }
 }
 </script>
