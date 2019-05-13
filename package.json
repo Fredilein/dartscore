@@ -1,0 +1,54 @@
+{
+  "name": "dartscore",
+  "version": "0.1.0",
+  "description": "online scoreboard",
+  "author": "adi",
+  "license": "WTFPL",
+  "scripts": {
+    "start:server": "nodemon server/server.js",
+    "start:client": "vue-cli-service serve client/src/main.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "app-root-path": "^2.2.1",
+    "express": "^4.16.4",
+    "nodemon": "^1.19.0",
+    "rethinkdb": "^2.3.3",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue": "^2.6.10"
+  },
+    "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}

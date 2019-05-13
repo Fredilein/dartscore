@@ -1,0 +1,20 @@
+const environment = process.env.NODE_ENV || 'local';
+const port = process.env.PORT || '3000';
+
+const globalConfig = {
+  port,
+  environment
+};
+
+const environmentSpecificConfig = {
+  local: {
+    exampleKey: '123foo'
+  },
+  production: {
+    exampleKey: '456bar'
+  }
+};
+
+const config = Object.assign(globalConfig, environmentSpecificConfig[environment]);
+
+module.exports = config;
