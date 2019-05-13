@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <div class="container">
       <h2>Vue express app</h2>
-      <p>something: {{ something }}</p>
+      <Scoreboard />
     </div>
   </div>
 </template>
@@ -10,9 +10,13 @@
 
 
 <script>
+import Scoreboard from './components/Scoreboard.vue';
 
 export default {
   name: 'app',
+  components: {
+    Scoreboard
+  },
   data () {
     return {
       something: 1
