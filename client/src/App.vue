@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <div class="container">
       <h1>dartscore</h1>
-      <Scoreboard />
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -10,13 +10,10 @@
 
 
 <script>
-import Scoreboard from './components/Scoreboard.vue';
+// import Scoreboard from './components/Scoreboard.vue';
 
 export default {
   name: 'app',
-  components: {
-    Scoreboard
-  },
   data () {
     return {
       something: 1
