@@ -17,7 +17,8 @@ mongoose.connection.once('open', () => {
 
 const server = hapi.server({
   port: 3001,
-  host: 'localhost'
+  host: 'localhost',
+  routes: { cors: true }
 });
 
 const init = async () => {
@@ -57,6 +58,7 @@ const init = async () => {
 };
 
 init();
+
 
 // // Create express app instance:
 // const app = express();

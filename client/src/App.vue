@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="app">
     <div class="container">
-      <h1>dartscore</h1>
       <router-view></router-view>
     </div>
   </div>
