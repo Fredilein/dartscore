@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const creds = require('../credentials.js');
+const Room = require('./models/room');
+const Test = require('./models/test');
 
 
 
@@ -14,6 +16,34 @@ mongoose.connection.once('open', () => {
 
 // Create express app instance:
 const app = express();
+
+// Routes
+app.get('/rooms', function (_, res) {
+  res.send(Test.find());
+});
+
+app.post('/rooms', function (req, res) {
+  // const {roomName, playerNames} = req.params;
+  // let n = playerNames.length; 
+  // var score = [];
+  // var i;
+  // for (i=0; i< n; i++) {
+  //   score.push({ remaining: 301, legs: 0});
+  // }
+  // const room = new Room({
+  //   roomName,
+  //   playerNames,
+  //   score,
+  //   activePlayer: 0,
+  //   active: true
+  // });
+  // res.send(room.save());
+  const {something} = req.params;
+  const test = new Test({
+    something
+  });
+  res.send(test.save());
+});
 
 
 const server = app.listen(3001, function() {
