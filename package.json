@@ -12,6 +12,7 @@
     "app-root-path": "^2.2.1",
     "core-js": "^2.6.5",
     "express": "^4.16.4",
+    "hapi": "^18.1.0",
     "mongoose": "^5.5.8",
     "nodemon": "^1.19.0",
     "rethinkdb": "^2.3.3",
