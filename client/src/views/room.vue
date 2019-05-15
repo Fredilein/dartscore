@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Room</h1>
-    <p>roomId: {{ roomId }}</p>
+    <p>roomId: {{ $route.params.roomId }}</p>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   name: 'room',
   data () {
     return {
-      roomId: 2
+      something: 0
     }
   }
 }

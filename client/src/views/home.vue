@@ -7,10 +7,13 @@
 
       <h3>All rooms:</h3>
       <ul class="list-group">
-        <li v-for="r in rooms" class="list-group-item room-item">
-          <span class="name">
-            {{ r.roomName }}
-          </span>
+        <li v-for="r in rooms" class="list-group-item room-item" v-bind:key="r._id">
+
+          <router-link :to="{ name: 'room', params: {roomId: r._id}}">
+            <span class="name">
+              {{ r.roomName }}
+            </span>
+          </router-link>
 
         </li>
       </ul>
