@@ -13,7 +13,7 @@
       <div class="container">
         <div class="row">
           <div class="col-sm" v-for="p in state.player" v-bind:key="p._id">
-            <PlayerSheet v-bind:player="p" />
+            <PlayerSheet v-bind:player="p" v-bind:active="p._id == state.player[state.activePlayer]._id"/>
           </div>
         </div>
       </div>
@@ -83,5 +83,7 @@ export default {
 
 <style lang="stylus">
 
+.activePlayer
+  background-color #888
 
 </style>

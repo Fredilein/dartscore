@@ -86,12 +86,11 @@ io.on('connection', function(socket) {
     Room.findById(rid)
       .then(res => {
         let active  = res.activePlayer;
-        let n = res.player.length;
-        let player = res.player;
-        player[active].remaining -= data.turnscore;
+        let n = res.player.length; 
         let next = (active + 1) % n;
+        let playerNew = nextState(res.player, active, data.turnscore)
 
-        Room.findByIdAndUpdate(rid, {player: player, activePlayer: next}, {new: true})
+        Room.findByIdAndUpdate(rid, {player: playerNew, activePlayer: next}, {new: true})
           .then(res => {
             console.log("sent new state: "+JSON.stringify(res));
             io.to(rid).emit('STATE_UPDATE', {
@@ -109,6 +108,23 @@ io.on('connection', function(socket) {
   });
 
 });
+
+function nextState(player, active, turnscore) {
+  let newscore = player[active].remaining - turnscore;
+  if (newscore < 0) return player;
+  else if (newscore == 0) {
+    for (p in player) {
+      player[p].remaining = 301;
+      if (p == active) {
+        player[p].legs += 1;
+      }
+    }
+  }
+  else {
+    player[active].remaining -= turnscore;
+  }
+  return player
+}
 
 
 

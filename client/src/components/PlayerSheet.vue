@@ -3,6 +3,7 @@
     <h5>{{ player.name }}</h5>
     <p>Remaining: {{ player.remaining }}</p>
     <p>Legs: {{ player.legs }}</p>
+    <p>Active: {{ active }}</p>
   </div>
 </template>
 
@@ -16,7 +17,8 @@ export default {
       name: String,
       remaining: Number,
       legs: Number
-    }
+    },
+    active: Boolean
   }
 }
 </script>
