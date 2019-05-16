@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Room</h1>
-    <p>roomId: {{ this.$route.params.roomId }}</p>
     <div v-if="loading">
       <p>Loading state...</p>
     </div>
@@ -10,12 +8,19 @@
     </div>
     <div v-else>
 
-      <p>
-        {{ state }}
-      </p>
+      <h2>{{ state.roomName }}</h2>
 
-    <input v-model="turnscore" placeholder="Enter score">
-    <button type="button" class="btn btn-success" v-on:click="sendTurnscore">yup</button>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm" v-for="p in state.player" v-bind:key="p._id">
+            <PlayerSheet v-bind:player="p" />
+          </div>
+        </div>
+      </div>
+      
+
+      <input v-model="turnscore" placeholder="Enter score" />
+      <button type="button" class="btn btn-success" v-on:click="sendTurnscore">yup</button>
 
     </div>
   </div>
@@ -25,9 +30,13 @@
 
 <script>
 import socket from 'socket.io-client';
+import PlayerSheet from '../components/PlayerSheet.vue';
 
 export default {
   name: 'room',
+  components: {
+    PlayerSheet
+  },
   data () {
     return {
       state: {},
@@ -36,6 +45,22 @@ export default {
       loading: true,
       errored: false,
       errorMsg: ""
+    }
+  },
+  methods: {
+    sendTurnscore(e) {
+      e.preventDefault();
+      let s = Number(this.turnscore);
+
+      if (s > -1 && s < 181) {
+        this.socket.emit('SEND_TURNSCORE', {
+          roomId: this.$route.params.roomId,
+          turnscore: s
+        });
+        this.turnscore = "";
+      } else {
+        alert("Enter a valid score pls");
+      }
     }
   },
   mounted () {

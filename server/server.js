@@ -68,8 +68,7 @@ io.on('connection', function(socket) {
       .then(res => {
         socket.join(rid);
         io.to(rid).emit('STATE_UPDATE', {
-          state: res,
-          error: ""
+          state: res
         });
       })
       .catch(err => {
@@ -78,6 +77,33 @@ io.on('connection', function(socket) {
         });
 
       });
+  });
+
+  socket.on('SEND_TURNSCORE', function(data) {
+    console.log("score received: "+data);
+    let rid = data.roomId;
+    socket.join(rid);
+    Room.findById(rid)
+      .then(res => {
+        let active  = res.activePlayer;
+        let n = res.player.length;
+        let player = res.player;
+        player[active].remaining -= data.turnscore;
+        let next = (active + 1) % n;
+
+        Room.findByIdAndUpdate(rid, {player: player, activePlayer: next})
+          .then(res => {
+            io.to(rid).emit('STATE_UPDATE', {
+              state: res
+            });
+          });
+      })
+      .catch(err => {
+        io.to(rid).emit('ERROR', {
+          err
+        });
+      });
+
   });
 
 });
