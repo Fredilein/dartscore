@@ -60,6 +60,35 @@ const init = async () => {
 init();
 
 
+const io = require('socket.io')(server.listener);
+
+io.on('connection', function(socket) {
+  console.log(socket.id);
+
+  socket.on('INIT', function(data) {
+    let rid =  data.roomId;
+    console.log("room id: " + rid);
+    Room.findById(rid).then(res => {
+      socket.join(rid);
+      io.to(rid).emit('STATE_UPDATE', {
+        state: res,
+        error: ""
+      });
+    })
+    .catch(err => {
+      io.to(rid).emit('STATE_UPDATE', {
+        state: {},
+        error: "room not found"
+      });
+
+    });
+  });
+
+});
+
+
+
+
 // // Create express app instance:
 // const app = express();
 
