@@ -35,16 +35,13 @@ const init = async () => {
       path: '/rooms',
       handler: (req, res) => {
         const {roomName, playerNames} = req.payload;
-        let n = playerNames.length; 
-        var score = [];
-        var i;
-        for (i=0; i< n; i++) {
-          score.push({ remaining: 301, legs: 0});
+        var player = [];
+        for (p in playerNames) {
+          player.push({ name: playerNames[p], remaining: 301, legs: 0 });
         }
         const room = new Room({
           roomName,
-          playerNames,
-          score,
+          player,
           activePlayer: 0,
           active: true
         });
@@ -63,25 +60,24 @@ init();
 const io = require('socket.io')(server.listener);
 
 io.on('connection', function(socket) {
-  console.log(socket.id);
+  console.log("connection: "+socket.id);
 
   socket.on('INIT', function(data) {
     let rid =  data.roomId;
-    console.log("room id: " + rid);
-    Room.findById(rid).then(res => {
-      socket.join(rid);
-      io.to(rid).emit('STATE_UPDATE', {
-        state: res,
-        error: ""
-      });
-    })
-    .catch(err => {
-      io.to(rid).emit('STATE_UPDATE', {
-        state: {},
-        error: "room not found"
-      });
+    Room.findById(rid)
+      .then(res => {
+        socket.join(rid);
+        io.to(rid).emit('STATE_UPDATE', {
+          state: res,
+          error: ""
+        });
+      })
+      .catch(err => {
+        io.to(rid).emit('ERROR', {
+          err
+        });
 
-    });
+      });
   });
 
 });

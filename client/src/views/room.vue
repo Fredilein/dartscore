@@ -2,13 +2,21 @@
   <div>
     <h1>Room</h1>
     <p>roomId: {{ this.$route.params.roomId }}</p>
-    <div v-if="errored">
+    <div v-if="loading">
+      <p>Loading state...</p>
+    </div>
+    <div v-else-if="errored">
       {{ errorMsg }}
     </div>
-    <div v-else="">
+    <div v-else>
+
       <p>
         {{ state }}
       </p>
+
+    <input v-model="turnscore" placeholder="Enter score">
+    <button type="button" class="btn btn-success" v-on:click="sendTurnscore">yup</button>
+
     </div>
   </div>
 </template>
@@ -22,9 +30,10 @@ export default {
   name: 'room',
   data () {
     return {
-      something: 0,
       state: {},
+      turnscore: "",
       socket: socket('localhost:3001'),
+      loading: true,
       errored: false,
       errorMsg: ""
     }
@@ -34,12 +43,12 @@ export default {
       roomId: this.$route.params.roomId
     });
     this.socket.on('STATE_UPDATE', (data) => {
-      if (data.error != "") {
-        this.errored = true;
-        this.errorMsg = data.error;
-      } else {
-        this.state = data.state;
-      }
+      this.state = data.state;
+      this.loading = false;
+    });
+    this.socket.on('ERROR', (data) => {
+      this.errorMsg = "Error: " + data.err;
+      this.errored = true;
     });
   }
 }
