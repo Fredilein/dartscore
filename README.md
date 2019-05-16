@@ -1,7 +1,7 @@
 # dartscore
 
 ## Setup
-Create a file `credential.js` in the root directory of this project with your database login:
+Create a file `credentials.js` in the root directory of this project with your database login:
 ```
 module.exports = {
   DB_SERVER: "<server>",
