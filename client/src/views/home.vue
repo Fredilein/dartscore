@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Home</h1>
+    <h1>dartscore</h1>
     <div v-if="errored">Error loading rooms.</div>
     <div v-else-if="loading">Loading rooms...</div>
     <div v-else>
@@ -18,6 +18,8 @@
         </li>
       </ul>
 
+      <NewRoom />
+
     </div>
   </div>
 </template>
@@ -25,10 +27,14 @@
 
 
 <script>
+import NewRoom from '../components/NewRoom.vue';
 import axios from 'axios';
 
 export default {
   name: 'home',
+  components: {
+    NewRoom
+  },
   data () {
     return {
       rooms: [],
@@ -43,7 +49,7 @@ export default {
         this.rooms = res.data
       })
       .catch(err => {
-        console.log(err)
+        alert('Error: ' + err)
         this.errored = true
       })
       .finally(() => this.loading = false)
