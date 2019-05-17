@@ -19,8 +19,9 @@
       </div>
       
 
-      <input v-model="turnscore" placeholder="Enter score" />
-      <button type="button" class="btn btn-success" v-on:click="sendTurnscore">yup</button>
+      <label>{{ turnscore }}</label>
+
+      <keyboard v-model="turnscore" :maxlength="3" layouts="12345{←:backspace}|67890{K:ok}" @ok="sendTurnscore"></keyboard>
 
     </div>
   </div>
@@ -30,12 +31,14 @@
 
 <script>
 import socket from 'socket.io-client';
+import keyboard from 'vue-keyboard';
 import PlayerSheet from '../components/PlayerSheet.vue';
 
 export default {
   name: 'room',
   components: {
-    PlayerSheet
+    PlayerSheet,
+    keyboard
   },
   data () {
     return {
@@ -48,8 +51,7 @@ export default {
     }
   },
   methods: {
-    sendTurnscore(e) {
-      e.preventDefault();
+    sendTurnscore() {
       let s = Number(this.turnscore);
 
       if (s > -1 && s < 181) {
@@ -83,7 +85,5 @@ export default {
 
 <style lang="stylus">
 
-.activePlayer
-  background-color #888
 
 </style>
