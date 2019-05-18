@@ -8,6 +8,7 @@
     </div>
     <div v-else>
 
+      <router-link :to="{name: 'home'}">back</router-link>
       <h2>{{ state.roomName }}</h2>
 
       <div class="container">

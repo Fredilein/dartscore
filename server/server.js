@@ -27,7 +27,7 @@ const init = async () => {
       method: 'GET',
       path: '/rooms',
       handler: (req, res) => {
-        return Room.find();
+        return Room.find({active: true});
       }
     },
     {
@@ -46,6 +46,15 @@ const init = async () => {
           active: true
         });
         return room.save();
+      }
+    },
+    {
+      method: 'POST',
+      path:  '/closeroom',
+      handler: (req, res) => {
+        const {rid} = req.payload;
+        console.log("Close room: "+rid)
+        return Room.findByIdAndUpdate(rid, {active: false});
       }
     }
   ]);

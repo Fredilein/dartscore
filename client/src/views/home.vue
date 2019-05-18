@@ -15,6 +15,8 @@
             </span>
           </router-link>
 
+          <button class="btn btn-del" v-on:click="deleteRoom(r._id)">Delete room</button>
+
         </li>
       </ul>
 
@@ -42,6 +44,20 @@ export default {
       errored: false
     }
   },
+  methods: {
+    deleteRoom(id) {
+      axios
+        .post('http://localhost:3001/closeroom', {
+          rid: id
+        })
+        .then(res => {
+          location.reload(true)
+        })
+        .catch(err => {
+          alert('Error: ' + err)
+        });
+    }
+  },
   mounted () {
     axios
       .get('http://localhost:3001/rooms')
@@ -67,6 +83,10 @@ export default {
 
   .name
     font-size 1.1em
+    
+  .btn-del
+    position relative
+    float right
 
 
 </style>
