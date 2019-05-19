@@ -6,7 +6,9 @@
   "license": "WTFPL",
   "scripts": {
     "start:server": "nodemon server/server.js",
-    "start:client": "vue-cli-service serve client/src/main.js"
+    "start:client": "vue-cli-service serve client/src/main.js",
+    "now-build": "vue-cli-service build",
+    "now-start": "vue-cli-service start"
   },
   "dependencies": {
     "app-root-path": "^2.2.1",
