@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRoomModal">
-      Create New Room
+    <button type="button" class="btn btn-primary btn-new-room" data-toggle="modal" data-target="#newRoomModal">
+      <i class="fas fa-plus"></i>
     </button>
     
     <!-- Modal -->
@@ -87,5 +87,8 @@ export default {
 
 <style lang="stylus">
 
+.btn-new-room
+  width 100px
+  border-radius 50px
 
 </style>

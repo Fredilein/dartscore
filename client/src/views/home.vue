@@ -1,24 +1,29 @@
 <template>
-  <div>
+  <div class="container">
     <h1>dartscore</h1>
     <div v-if="errored">Error loading rooms.</div>
     <div v-else-if="loading">Loading rooms...</div>
+    <div v-else-if="rooms.length < 1">No rooms</div>
     <div v-else>
 
-      <h3>All rooms:</h3>
-      <ul class="list-group">
-        <li v-for="r in rooms" class="list-group-item room-item" v-bind:key="r._id">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <ul class="list-group list-group-flush rooms">
+            <li v-for="r in rooms" class="list-group-item room-item" v-bind:key="r._id">
+          
+              <span class="num-players">{{ r.player.length }} <i class="fas fa-user-friends"></i></span>
+          
+                <router-link class="name" :to="{ name: 'room', params: {roomId: r._id}}">
+                    {{ r.roomName }}
+                </router-link>
+          
+              <button class="btn btn-del" v-on:click="deleteRoom(r._id)"><i class="fas fa-times"></i></button>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-          <router-link :to="{ name: 'room', params: {roomId: r._id}}">
-            <span class="name">
-              {{ r.roomName }}
-            </span>
-          </router-link>
-
-          <button class="btn btn-del" v-on:click="deleteRoom(r._id)">Delete room</button>
-
-        </li>
-      </ul>
+      <br>
 
       <NewRoom />
 
@@ -77,16 +82,29 @@ export default {
 
 <style lang="stylus">
 
-.room-item
-  position relative
-  text-align left
+.rooms
+  
 
-  .name
-    font-size 1.1em
-    
-  .btn-del
-    position relative
-    float right
+  .room-item
+    padding-left 80px
+    text-align left
+
+    .num-players
+      position absolute
+      left 0
+      width 80px
+      text-align center
+      margin-top 7px
+
+    .name
+      position relative
+      font-size 1.1em
+      text-decoration none
+      top 6px
+      
+    .btn-del
+      position relative
+      float right
 
 
 </style>
