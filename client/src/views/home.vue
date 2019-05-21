@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>dartscore</h1>
+    <h1 class="title">DARTSCORE</h1>
     <div v-if="errored">Error loading rooms.</div>
     <div v-else-if="loading">Loading rooms...</div>
     <div v-else-if="rooms.length < 1">No rooms</div>
@@ -11,7 +11,7 @@
           <ul class="list-group list-group-flush rooms">
             <li v-for="r in rooms" class="list-group-item room-item" v-bind:key="r._id">
           
-              <span class="num-players">{{ r.player.length }} <i class="fas fa-user-friends"></i></span>
+              <span class="num-players">{{ r.player.length }} <i class="fas fa-user-friends fa-sm"></i></span>
           
                 <router-link class="name" :to="{ name: 'room', params: {roomId: r._id}}">
                     {{ r.roomName }}
@@ -82,29 +82,43 @@ export default {
 
 <style lang="stylus">
 
+@import '../assets/App.styl'
+
+.title
+  color WHITE
+
 .rooms
-  
+  color WHITE
+  font-size 1.2em
 
   .room-item
     padding-left 80px
     text-align left
+    background-color rgba(0,0,0,0)
+    border-color WHITE
+
+    a,button
+      &:hover
+        color #FFF
 
     .num-players
       position absolute
       left 0
       width 80px
       text-align center
-      margin-top 7px
+      margin-top 5px
 
     .name
       position relative
       font-size 1.1em
       text-decoration none
-      top 6px
+      top 4px
+      color WHITE
       
     .btn-del
       position relative
       float right
+      color WHITE
 
 
 </style>
