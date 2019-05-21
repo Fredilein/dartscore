@@ -37,7 +37,7 @@ const init = async () => {
         const {roomName, playerNames} = req.payload;
         var player = [];
         for (p in playerNames) {
-          player.push({ name: playerNames[p], remaining: 301, legs: 0 });
+          player.push({ name: playerNames[p], points: [], legs: 0 });
         }
         const room = new Room({
           roomName,
@@ -97,8 +97,8 @@ io.on('connection', function(socket) {
         let n = res.player.length; 
         let next = (active + 1) % n;
         let playerNew = nextState(res.player, active, data.turnscore)
-
-        Room.findByIdAndUpdate(rid, {player: playerNew, activePlayer: next}, {new: true})
+        
+        Room.findByIdAndUpdate(rid, {player: playerNew, activePlayer: next}, {new: true, useFindAndModify: false})   
           .then(res => {
             io.to(rid).emit('STATE_UPDATE', {
               state: res
@@ -117,20 +117,26 @@ io.on('connection', function(socket) {
 });
 
 function nextState(player, active, turnscore) {
-  let newscore = player[active].remaining - turnscore;
+  let newscore = remaining(player[active].points) - turnscore;
   if (newscore < 0) return player;
   else if (newscore == 0) {
     for (p in player) {
-      player[p].remaining = 301;
-      if (p == active) {
-        player[p].legs += 1;
-      }
+      player[p].points = [];
     }
+    player[active].legs += 1;
   }
   else {
-    player[active].remaining -= turnscore;
+    player[active].points.push(turnscore);
   }
   return player
+}
+
+function remaining(points) {
+  var sum = 0;
+  for (var i = 0; i < points.length; i++) {
+    sum = sum + points[i];
+  }
+  return 301 - sum
 }
 
 

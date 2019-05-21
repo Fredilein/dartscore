@@ -1,7 +1,7 @@
 <template>
   <div>
     <h5>{{ player.name }}</h5>
-    <p>Remaining: {{ player.remaining }}</p>
+    <p>Remaining: {{ player.points | remaining }}</p>
     <p>Legs: {{ player.legs }}</p>
     <p>Active: {{ active }}</p>
   </div>
@@ -15,10 +15,24 @@ export default {
   props: {
     player: {
       name: String,
-      remaining: Number,
+      points: [Number],
       legs: Number
     },
     active: Boolean
+  },
+  data() {
+    return{
+      remaining: this.calcRemaining(this.player.points)
+    }
+  },
+  methods: {
+    calcRemaining(points) {
+      var sum = 301
+      for (var p in points) {
+        sum -= points[p]
+      }
+      return sum
+    }
   }
 }
 </script>

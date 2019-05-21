@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const RoomSchema = new Schema({
   roomName: String,
-  player: [{ name: String, remaining: Number, legs: Number }],
+  player: [{ name: String, points: [Number], legs: Number }],
   activePlayer: Number,
   active: Boolean
 });
