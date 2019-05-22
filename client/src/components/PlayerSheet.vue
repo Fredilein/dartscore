@@ -8,7 +8,7 @@
     
     <span class="name">{{ player.name }}</span>
 
-    <p>Legs: {{ player.legs }}</p>
+    <StatLegs v-bind:legs="player.legs" />
 
   </div>
 </template>
@@ -17,11 +17,13 @@
 
 <script>
 import StatBars from '../components/StatBars.vue'
+import StatLegs from '../components/StatLegs.vue'
 
 export default {
   name: 'PlayerSheet',
   components: {
-    StatBars
+    StatBars,
+    StatLegs
   },
   props: {
     player: {
