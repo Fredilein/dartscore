@@ -1,13 +1,15 @@
 <template>
   <div class="sheet" v-bind:class="{ 'active': active }">
-    <h5>{{ player.name }}</h5>
 
-    <StatBars v-bind:remaining="player.points | remaining" />
+    <StatBars 
+      v-bind:remaining="player.points | remaining" 
+      v-bind:average="player.points | average"
+    />
+    
+    <span class="name">{{ player.name }}</span>
 
-    <p>{{player.points}}</p>
-
-    <p>Remaining: {{ player.points | remaining }}</p>
     <p>Legs: {{ player.legs }}</p>
+
   </div>
 </template>
 
@@ -60,17 +62,9 @@ export default {
 .active 
   border 2px solid WHITE
 
-.container-bars
-  height 150px
-  width 200px
-  background-color #222
+.name
   position relative
-
-.point-bar
-  position absolute
-  background-color #888
-  width 40px
-  height 80%
-  bottom 0
+  top 10px
+  font-size 1.3em
 
 </style>
