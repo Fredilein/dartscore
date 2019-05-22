@@ -19,10 +19,23 @@
         </div>
       </div>
       
-
-      <label>{{ turnscore }}</label>
-
-      <keyboard v-model="turnscore" :maxlength="3" layouts="12345{←:backspace}|67890{K:ok}" @ok="sendTurnscore"></keyboard>
+      <div class="container keyboard-container">
+        <div class="row justify-content-center">
+          <div class="col-xs">
+            <keyboard v-model="turnscore" :maxlength="3" layouts="12345{←:backspace}|67890{K:ok}" @ok="sendTurnscore"></keyboard>
+          </div>
+            <div class="col-xs">
+              <div class="turnscore" v-on:click="sendTurnscore">
+                <span class="turnscore-label">
+                  {{ turnscore || "0" }}
+                </span>
+                <span class="turnscore-text">
+                  Enter Score
+                </span>
+              </div>
+            </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -94,5 +107,43 @@ export default {
   .sheet-container
     margin-top 30px
     margin-bottom 30px
+
+
+  .keyboard-container
+    bottom 30px
+    padding-top 30px
+
+    .vue-keyboard-key
+      height 80px
+      width 80px
+      font-size 24px
+      border-radius 10px
+      background-color WHITE
+      color #222
+
+  .turnscore
+    position relative
+    height 164px
+    width 164px
+    background-color WHITE
+    border-radius 10px
+    border 2px solid WHITE
+    margin 2px
+    padding-top 20px
+
+    .turnscore-label
+      font-size 50px
+      color #222
+
+    .turnscore-text
+      position absolute
+      font-size 24px
+      color #222
+      left 10%
+      bottom 12%
+
+
+
+
 
 </style>
