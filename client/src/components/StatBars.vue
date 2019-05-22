@@ -5,12 +5,14 @@
         v-bind:style="{ height: remaining / 301 * 100 + '%'}"
       >
         <span class="pts">{{ remaining }}</span>
+        <span v-if="(remaining / 301) > 0.3" class="bar-label" style="left: 20px">+</span>
       </div>
       <div 
         class="bar avg-bar" 
-        v-bind:style="{ height: average / 301 * 100 + '%'}"
+        v-bind:style="{ height: average / 180 * 100 + '%'}"
       >
-        <span v-if="(average / 301) > 0.18" class="avg">Ø</span>
+        <span class="avg">{{ Math.round(average) }}</span>
+        <span v-if="(average / 180) > 0.3" class="bar-label" style="left: 10px">Ø</span>
       </div>
     </div>
 </template>
@@ -53,17 +55,21 @@ export default {
 .avg-bar
   background-image linear-gradient(to left, AVG_GRAD_1, AVG_GRAD_2)
   left 60px
-  width 30px
+  min-height 18%!important
+  width 34px
 
 .pts
   color TEXT_DARK
   font-size 1.2em
 
-.avg
+.avg 
+  color TEXT_DARK
+  font-size 1.2em
+
+.bar-label
   position absolute
   color TEXT_DARK
   font-size 1.2em
   bottom 0
-  left 8px
 
 </style>
