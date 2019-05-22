@@ -2,38 +2,30 @@
   <div>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary btn-new-room" data-toggle="modal" data-target="#newRoomModal">
-      <i class="fas fa-plus"></i>
+      <i class="fas fa-plus fa-sm"></i> Create New Room
     </button>
     
     <!-- Modal -->
     <div class="modal fade" id="newRoomModal" tabindex="-1" role="dialog" aria-labelledby="newRoomModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="newRoomModalLabel">New Room</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
 
+
+          <div class="modal-body">
             <div class="form-group">
               <label for="roomName">Room Name</label>
               <input class="form-control" id="roomName" type="text" v-model="roomName" />
               <br>
-              <label>Player Names</label>
-              <input class="form-control" type="text" v-for="(player, index) in playerNames" v-model="playerNames[index]" v-bind:key="index"/>
-
-              <button type="button" class="btn btn-primary" v-on:click="addPlayer">+</button>
-
+              <label for="playerNames">Player Names</label>
+              <input class="form-control" id="playerNames" type="text" v-for="(player, index) in playerNames" v-model="playerNames[index]" v-bind:key="index"/>
+              <button type="button" class="btn btn-primary btn-add-player" v-on:click="addPlayer">Add Player</button>
             </div>
-          
-
-
           </div>
+
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" v-on:click="createRoom">Create Room</button>
+            <button type="button" class="btn btn-primary btn-create-room" v-on:click="createRoom">Create Room</button>
           </div>
+
         </div>
       </div>
     </div>
@@ -87,8 +79,42 @@ export default {
 
 <style lang="stylus">
 
+@import '../assets/App.styl'
+
+.modal
+  background-color rgba(255,255,255,0.1)
+
+.modal-content
+  background-color BG_GRAD_2
+  color WHITE
+
 .btn-new-room
-  width 100px
+  width 200px
   border-radius 50px
+  background-image btn-bg
+  color BG_GRAD_2
+  border-color WHITE
+  
+  &:hover
+    border-color WHITE
+
+.btn-add-player
+  border-radius 50px
+  margin-top 15px
+  margin-bottom -10px
+  background-image btn-bg
+  color BG_GRAD_2
+
+.btn-create-room
+  border-radius 50px
+  background-image btn-bg
+  color BG_GRAD_2
+
+label
+  float left
+
+.form-control
+  border-radius 50px
+  margin-bottom 5px
 
 </style>

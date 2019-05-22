@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="room">
     <div v-if="loading">
       <p>Loading state...</p>
     </div>
@@ -11,7 +11,7 @@
       <router-link :to="{name: 'home'}">back</router-link>
       <h2>{{ state.roomName }}</h2>
 
-      <div class="container">
+      <div class="container sheet-container">
         <div class="row">
           <div class="col-sm" v-for="p in state.player" v-bind:key="p._id">
             <PlayerSheet v-bind:player="p" v-bind:active="p._id == state.player[state.activePlayer]._id"/>
@@ -86,5 +86,13 @@ export default {
 
 <style lang="stylus">
 
+@import '../assets/App.styl'
+
+.room
+  color WHITE
+
+  .sheet-container
+    margin-top 30px
+    margin-bottom 30px
 
 </style>
