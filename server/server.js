@@ -149,7 +149,7 @@ io.on('connection', function(socket) {
 
 function nextState(player, active, turnscore) {
   let newscore = remaining(player[active].points) - turnscore;
-  if (newscore < 0) return player;
+  if (newscore < 0 || newscore == 1) return player;
   else if (newscore == 0) {
     for (p in player) {
       player[p].points = [];
