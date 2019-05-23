@@ -22,7 +22,7 @@
       <div class="container keyboard-container">
         <div class="row justify-content-center">
           <div class="col-xs">
-            <keyboard v-model="turnscore" :maxlength="3" layouts="12345{←:backspace}|67890{K:ok}" @ok="sendTurnscore"></keyboard>
+            <keyboard v-model="turnscore" :maxlength="3" layouts="12345{←:backspace}|67890{PREV:prev}" @prev="prevPlayer"></keyboard>
           </div>
             <div class="col-xs">
               <div class="turnscore" v-on:click="sendTurnscore">
@@ -77,6 +77,11 @@ export default {
       } else {
         alert("Enter a valid score pls");
       }
+    },
+    prevPlayer() {
+      this.socket.emit('PREV_PLAYER', {
+        roomId: this.$route.params.roomId
+      })
     }
   },
   mounted () {

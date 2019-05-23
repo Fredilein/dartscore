@@ -114,6 +114,37 @@ io.on('connection', function(socket) {
 
   });
 
+  socket.on('PREV_PLAYER', function(data) {
+    let rid = data.roomId;
+    socket.join(rid);
+    Room.findById(rid)
+      .then(res => {
+        let active = res.activePlayer;
+        let n = res.player.length;
+        var prev = 0;
+        if (active < 1) prev = n-1;
+        else prev = active-1;
+        var playerNew = res.player;
+
+        if (playerNew[prev].points.length > 0) {
+          playerNew[prev].points.pop();
+        
+          Room.findByIdAndUpdate(rid, {player: playerNew, activePlayer: prev}, {new: true, useFindAndModify: false})   
+            .then(res => {
+              io.to(rid).emit('STATE_UPDATE', {
+                state: res
+              });
+            })
+            .catch(err => { throw err });
+        }
+      })
+      .catch(err => {
+        io.to(rid).emit('ERROR', {
+          err
+        });
+      });
+  });
+
 });
 
 function nextState(player, active, turnscore) {
