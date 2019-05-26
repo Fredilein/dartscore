@@ -5,7 +5,7 @@
         v-bind:style="{ height: remaining / 301 * 100 + '%'}"
       >
         <span class="pts">{{ remaining }}</span>
-        <span v-if="(remaining / 301) > 0.3" class="bar-label" style="left: 20px">+</span>
+        <!-- <span v-if="(remaining / 301) > 0.3" class="bar-label" style="left: 20px">+</span> -->
       </div>
       <div 
         class="bar avg-bar" 
@@ -36,7 +36,7 @@ export default {
 @import '../assets/App.styl'
 
 .container-bars
-  height 150px
+  height 200px
   width 90px
   position relative
   padding 0
@@ -50,7 +50,7 @@ export default {
 .pts-bar
   background-image linear-gradient(to left, BTN_GRAD_1, BTN_GRAD_2)
   min-height 18%!important
-  width 50px
+  width 70px
 
 .avg-bar
   background-image linear-gradient(to left, AVG_GRAD_1, AVG_GRAD_2)
@@ -60,7 +60,7 @@ export default {
 
 .pts
   color TEXT_DARK
-  font-size 1.2em
+  font-size 1.6em
 
 .avg 
   color TEXT_DARK
